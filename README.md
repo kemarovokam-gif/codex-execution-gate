@@ -1,3 +1,15 @@
+# CODEX Execution Gate
+
+Minimal execution-bound invariant enforcement harness with tamper-evident audit ledger and replay verification.
+
+## Quickstart (30 seconds)
+
+Clone the repo and run the enforcement harness:
+
+```bash
+git clone https://github.com/kemarovokam-gif/codex-execution-gate
+cd codex-execution-gate
+python quickstart.py
 # CODEX Execution-Bound Governance Harness (Public-Safe)
 
 **License:** Proprietary / All Rights Reserved  
