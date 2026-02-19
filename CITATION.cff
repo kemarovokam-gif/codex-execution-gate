@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this repository for evaluation or citation, please cite it as below."
+title: "CODEX Execution-Bound Governance Harness (Public-Safe)"
+authors:
+  - family-names: "Morrison"
+    given-names: "Kemar Armando"
+date-released: "2026-02-19"
+license: "All rights reserved"
+repository-code: "https://github.com/<your-github-username>/codex-execution-gate"
+keywords:
+  - "AI governance"
+  - "execution-time authorization"
+  - "admissibility gate"
+  - "audit ledger"
+  - "deterministic replay"
