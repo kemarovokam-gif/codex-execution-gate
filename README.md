@@ -78,3 +78,49 @@ tests/             enforcement + replay + tamper tests
 
 Kemar Armando Morrison  
 kemar.morrison@ou.ac.uk
+"""
+Minimal Teleken-VÖLUNDR Prototype
+----------------------------------
+Demonstrates plug-and-play governance flow
+without exposing proprietary core engines.
+"""
+
+import numpy as np
+
+# --- Minimal Identity Functional ---
+class IdentityFunctional:
+    def __init__(self, epsilon=0.5):
+        self.epsilon = epsilon
+        self._I_prev = None
+
+    def compute(self, psi):
+        return float(np.sum(np.abs(psi)**2) / max(len(psi), 1))
+
+    def drift(self, psi):
+        I = self.compute(psi)
+        if self._I_prev is None:
+            self._I_prev = I
+            return 0.0, True
+        dI = abs(I - self._I_prev)
+        self._I_prev = I
+        return dI, dI <= self.epsilon
+
+# --- Minimal Governance Step ---
+def governance_step(state):
+    """
+    Demonstrates a simple governance check.
+    In practice, replace with P23 projection, NIR dissipation, Chimera recurrence.
+    """
+    identity = IdentityFunctional()
+    drift, stable = identity.drift(state)
+    status = "OK" if stable else "DRIFT"
+    # Example governance: simple normalization
+    new_state = state / (np.linalg.norm(state) + 1e-8)
+    return new_state, drift, status
+
+# --- Demo Execution ---
+if __name__ == "__main__":
+    state = np.random.rand(10)
+    for step in range(5):
+        state, drift, status = governance_step(state)
+        print(f"Step {step}: status={status}, drift={drift:.5f}, state={state}")
