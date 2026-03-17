@@ -1,0 +1,51 @@
+import csv
+
+# Example results structure — replace with your QBN output variables
+results = {
+    128: {
+        "FULL": {"Mean": 25026.947599, "Peak": 50055.129352, "Final": 50055.129352, "Anchor_OK": True},
+        "NO_ALIGNMENT": {"Mean": 25052.922184, "Peak": 50109.317302, "Final": 50109.317302, "Anchor_OK": True},
+        "NO_GAIN": {"Mean": 9.564656, "Peak": 10.822355, "Final": 10.822355, "Anchor_OK": True},
+        "PURE_NOISE": {"Mean": 0.367324, "Peak": 0.785019, "Final": 0.198935, "Anchor_OK": True},
+    },
+    512: {
+        "FULL": {"Mean": 25026.947599, "Peak": 50055.129352, "Final": 50055.129352, "Anchor_OK": True},
+        "NO_ALIGNMENT": {"Mean": 25052.922184, "Peak": 50109.317302, "Final": 50109.317302, "Anchor_OK": True},
+        "NO_GAIN": {"Mean": 9.709944, "Peak": 10.829986, "Final": 10.829986, "Anchor_OK": True},
+        "PURE_NOISE": {"Mean": 0.572696, "Peak": 0.935421, "Final": 0.195495, "Anchor_OK": True},
+    },
+    1024: {
+        "FULL": {"Mean": 25026.947599, "Peak": 50055.129352, "Final": 50055.129352, "Anchor_OK": True},
+        "NO_ALIGNMENT": {"Mean": 25052.922184, "Peak": 50109.317302, "Final": 50109.317302, "Anchor_OK": True},
+        "NO_GAIN": {"Mean": 9.798154, "Peak": 10.840071, "Final": 10.840071, "Anchor_OK": True},
+        "PURE_NOISE": {"Mean": 0.427276, "Peak": 0.879187, "Final": 0.527413, "Anchor_OK": True},
+    }
+}
+
+# --- Console print ---
+for dim, modes in results.items():
+    print(f"\n===== DIMENSION {dim} =====")
+    for mode, metrics in modes.items():
+        print(f"Mode: {mode} | "
+              f"Mean: {metrics['Mean']} | "
+              f"Peak: {metrics['Peak']} | "
+              f"Final: {metrics['Final']} | "
+              f"Anchor OK: {metrics['Anchor_OK']}")
+
+# --- CSV export ---
+csv_file = "qbn_results.csv"
+with open(csv_file, mode="w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["Dimension", "Mode", "Mean", "Peak", "Final", "Anchor_OK"])
+    for dim, modes in results.items():
+        for mode, metrics in modes.items():
+            writer.writerow([
+                dim,
+                mode,
+                metrics["Mean"],
+                metrics["Peak"],
+                metrics["Final"],
+                metrics["Anchor_OK"]
+            ])
+
+print(f"\nCSV export complete: {csv_file}")
